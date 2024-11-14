@@ -22,11 +22,12 @@ Advantages of RDS over deploying a database in EC2
 * But you can’t SSH into your instances (amazon manages them for you)
 
 RDS Read replicas for read scalability
-* Up to 5 read replicas
+* Up to 15 read replicas(MySQL, MariaDB and PostgreSQL) and 5 read replicas(Oracle and SQL Server)
 * Within AZ, Cross AZ or Cross region
 * Replication is Async, so reads are eventually consistent
 * Replicas can be promoted to their own DB
 * Applications must update the connection string to leverage read replicas
+* To enable read replicas, you need to enable backups
 
 RDS Read Replicas – Use Cases
 - You have a production database that is taking on normal load
@@ -88,13 +89,13 @@ RDS Security
 
 RDS vs. Aurora
 * Aurora is a proprietary technology from AWS (not open sourced)
-* Postgres and MySQL are both supported as Aurora DB (that means you r drivers will work as if Aurora was a Postgres or MySQL database)
+* Postgres and MySQL are both supported as Aurora DB (that means your drivers will work as if Aurora was a Postgres or MySQL database)
 * Aurora is “AWS cloud optimized” and claims 5x performance improvements over MySQL on RDS, over 3x the performance of Postgres on RDS
 * Aurora storage automatically grows in increments of 10GB, up to 64 TB
 * Aurora can have 15 replicas while MySQL has 5, and the replication process is faster (sub 10 ms replica lag)
 * Failover in Aurora is instantaneous. It’s HA native.
 * Aurora costs more than RDS (20% more) - but is more efficient
-- Aurora support for cross region replication
+- Aurora supports for cross region replication
 
 Aurora DB Cluster
 - writer endpoint : pointing to the master
@@ -110,7 +111,7 @@ Aurora Security
 - You can’t SSH
 
  Aurora Serverless
-- Automated database instantiation and auto- scaling based on actual usage
+- Automated database instantiation and auto-scaling based on actual usage
 - Good for infrequent, intermittent or unpredictable workloads
 - No capacity planning needed
 - Pay per second, can be more cost-effective 
@@ -126,64 +127,3 @@ Global Aurora
 	- Helps for decreasing latency
 	• Promoting another region (for disaster recovery) has an RTO of < 1 minute
 	
-Amazon ElastiCache Overview
-- The same way RDS is to get managed Relational Databases...
-- ElastiCache is to get managed Redis or Memcached
-- Caches are in-memory databases with really high performance, low latency
-- Helps reduce load off of databases for read intensive workloads
-- Helps make your application stateless
-- AWS takes care of OS maintenance / patching, optimizations, setup, configuration, monitoring, failure recovery and backups
-- Using ElastiCache involves heavy application code changes
-
-ElastiCache Solution Architecture - DB Cache
-- Applications queries ElastiCache, if not available, get from RDS and store in ElastiCache.
-- Helps relieve load in RDS.
-- Cache must have an invalidation strategy to make sure only the most current data is used in there.
-
-ElastiCache Solution Architecture – User Session Store
-- User logs into any of the application
-- The application writes the session data into ElastiCache
-- The user hits another instance of our application
-- The instance retrieves the data and the user is already logged in
-
-ElastiCache – Redis vs Memcached
-- REDIS
-	- Multi AZ with Auto-Failover
-	- Read Replicas to scale reads and have high availability
-	- Data Durability using AOF persistence
-	- Backup and restore features
-
-- MEMCACHED
-	- Multi-node for partitioning of data (sharding)
-	- Non persistent
-	- No backup and restore
-	- Multi-threaded architecture
-	
-Caching Implementation
-- Lazy Loading / Cache-Aside / Lazy Population
-	- Pros
-		- Only requested data is cached (the cache isn’t filled up with unused data)
-		- Node failures are not fatal (just increased latency to warm the cache)
-	- Cons
-		- Cache miss penalty that results in 3 round trips, noticeable delay for that request
-		- Stale data: data can be updated in the database and outdated in the cache
-		
-Write Through – Add or Update cache when database is updated
-	- Pros:
-		- Data in cache is never stale, reads are quick
-		- Write penalty vs Read penalty (each write requires 2 calls)
-	- Cons:
-		- Missing Data until it is added / updated in the DB. Mitigation is to implement Lazy Loading strategy as well
-		- Cache churn – a lot of the data will never be read
-		
-Cache Evictions and Time-to-live (TTL)
-- Cache eviction can occur in three ways: 
-	- You delete the item explicitly in the cache
-	- Item is evicted because the memory is full and it’s not recently used (LRU) 
-	- You set an item time-to-live(orTTL)
-- TTL are helpful for any kind of data: 
-	- Leaderboards
-	- Comments
-	- Activity streams
-- TTL can range from few seconds to hours or days
-- If too many evictions happen due to memory, you should scale up or out

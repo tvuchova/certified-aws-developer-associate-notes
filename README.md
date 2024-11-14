@@ -1,7 +1,9 @@
+
 # Certified AWS Associate Developer Notes
 Part
 
-### 2021 AWS developer associate exam 
+
+### 2024 AWS Developer Associate Exam 
 
 ## Table of contents
 
@@ -50,9 +52,6 @@ Part
   - Elastic Container Registry
   - Fargate
 
-- [Exam Preperation](#exam-preparation)
-
-
 ## Exam Preparation
 
 - Exam details
@@ -68,7 +67,7 @@ Part
         - Monitoring and Troubleshooting: CloudWAtch, CloudTrail, X-Ray
 
     - Exam Guide:
-        - [Certified Developer - Associate Exam PDF](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS_Certified_Developer_Associate-Exam_Guide_EN_1.4.pdf)
+        - [Certified Developer - Associate Exam PDF](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Exam-Guide.pdf)
 
 - EC2 + IAM Exam Checklist
   * Know how to SSH into EC2 (and change .pem file permissions) 
@@ -83,3 +82,7 @@ Part
   * If you are getting a permission error exception when trying to SSH into your linux instance, then the key is missing chmod 400 permissions
   * If you are getting a network timeout when trying to SSH into your EC2 instance, then your security groups are misconfigured
   * Security groups reference IP address, CIDR block, Security group, but NOT DNS name
+
+# Contributors
+
+Please feel free to contribute by making a Pull Request!

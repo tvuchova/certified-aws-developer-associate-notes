@@ -1,6 +1,6 @@
 # SNS: Simple Notification Service
 
-SNS is a fully managed messing service for both application to application (A2A) and application to person (A2P) communication.
+SNS is a fully managed messaging service for both application to application (A2A) and application to person (A2P) communication.
 
 - The event producer only sends a message to one SNS topic at a time
 - Many event receivers can be created to listen to an SNS topic notification
@@ -45,6 +45,6 @@ SNS is a fully managed messing service for both application to application (A2A)
 - Access Controls: IAM policies to regulate access to the SNS API
 
 - SNS Access Policies (similar to S3 Bucket policies)
-    - Useful for mult account access to SNS topics
+    - Useful for multi account access to SNS topics
     - Useful for allowing other services to write to an SNS topic
 

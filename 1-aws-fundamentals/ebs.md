@@ -20,8 +20,8 @@
 #### EBS Volume Types
 - EBS Volumes come in 4 types 
 - GP2 (SSD): General purpose SSD volume that balances price and performance for a wide variety of workloads 
-- IO1 (SSD): Highest-performance SSD volume for mission-critical low-latency or high- throughput workloads 
-- ST1 (HDD): Low cost HDD volume designed for frequently accessed, throughput- intensive workloads 
+- IO1 (SSD): Highest-performance SSD volume for mission-critical low-latency or high-throughput workloads 
+- ST1 (HDD): Low cost HDD volume designed for frequently accessed, throughput-intensive workloads 
 - SC1 (HDD): Lowest cost HDD volume designed for less frequently accessed workloads 
 - EBS Volumes are characterized in Size | Throughput | IOPS
 - When in doubt always consult the AWS documentation
@@ -63,7 +63,7 @@
 EBS Snapshots
 * EBS Volumes can be backed up using “snapshots”
 * Snapshots only take the actual space of the blocks on the volume
-* If you snapshot a 100GB drive that only has 5 gb of data, then your EBS snapshot will only be 5 gb
+* If you take a snapshot of a 100GB drive that only has 5 gb of data, then your EBS snapshot will only be 5 gb
 * Snapshots are used for:
     * Backups: ensuring you can save your data in case of catastrophe
     * Volume migration
@@ -94,47 +94,8 @@ EBS Snapshots
     * Backups must be operated by the user
 * Overall, EBS-backed instances should fit most applications workloads
 
-#### EB Deployment Modes
-- Single Instance mode: Great for development environment
-- High Availability with Load Balancer mode: Great for production environments
-
-What if you want to update each deployment
-- **All at once (deploy on the go)**
-  - Fastest, but instances aren't available to serve traffic for awhile (longer downtime)
-  - No additional cost
-- **Rolling update**
-  - update a few (bucket) instances at a time, and then move onto the next bucket when the current ones become healthy
-  - You can set the bucket size
-  - Application will run below capacity during update
-  - At some point, the application will run both versions simultaneously
-  - Can be a very long deployment time depending on number of instances running
-  - No additional cost
-- **Rolling update with additonal batches**
-  - Similar to rolling updates but you spin up new instances to move the batch (so the old application is still available)
-  - Application is running at capacity
-  - You can set the bucket size
-  - Additional batches are removed at the end of the deployment
-  - Small additional cost (due to additional running instances)
-  - Great for production environments
-- **Immutable**
-  - Spins up new instances in a new ASG, deploys versions to these instances and then swaps all the instances when everything is healthy
-  - Zero downtime
-  - New code is deployed on new instances in a temporary ASG
-  - High cost, double capacity
-  - Longest deployment
-  - Quick rollback in case of failures (new ASG will be terminated)
-  - Best for production environements
-
-#### Deployment Mechanism
-- Describe dependancies
-  - (requirements.txt for python, package.json for node.js)
-- Package code as zip
-- Zip file is uploaded to each EC2 machine
-- Each EC2 machine resolves dependencies (SLOW)
-- Optimization in case of long deployments:
-  - Package dependencies with source code to improve deployment performance and speed
-
 #### EBS Summary
+
 * EBS can be attached to only one instance at a time
 * EBS are locked at the AZ level
 * Migrating an EBS volume across AZ means first backing it up (snapshot), then recreating it in the other AZ

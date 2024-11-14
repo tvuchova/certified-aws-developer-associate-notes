@@ -1,13 +1,13 @@
 #### CodeCommit
 - **Version Control** is the ability to understand changes that happened to the code over time (and possibly roll back)
 - This is enabled by using a version control system such as Git
-- A git repository can live on your machine or on a centrol online repository
+- A git repository can live on your machine or on a central online repository
 - Benefits:
     - Collaborate with a team of developers
     - Make sure the code is backed-up somewhere
     - Makes sure it's fully viewable and auditable
 - AWS CodeCommit
-    - private git repositories
+    - Private git repositories
     - No size limits on the repositories (scale seamlessly)
     - Fully managed and highly available
     - The code is only in your AWS cloud account
@@ -18,7 +18,7 @@
     - Authentication with Git
         - SSH Keys: AWS Users can configure SSH keys in their IAM Console
         - HTTPS: Done through AWS CLI Authentication helper or generate HTTPS credentials
-        - MFA: Multi Factor Authentication
+        - MFA: Multi-Factor Authentication
     - Authorization with Git
         - IAM Policies manage user / roles rights to the repositories
     - Encryption
